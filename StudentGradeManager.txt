@@ -1,0 +1,68 @@
+import java.util.*;
+
+public class StudentGradeManager {
+
+    // Student class to hold individual student data
+    static class Student {
+        String name;
+        ArrayList<Double> grades;
+
+        Student(String name) {
+            this.name = name;
+            this.grades = new ArrayList<>();
+        }
+
+        double getAverage() {
+            double sum = 0;
+            for (double g : grades) sum += g;
+            return grades.size() > 0 ? sum / grades.size() : 0;
+        }
+
+        double getHighest() {
+            return Collections.max(grades);
+        }
+
+        double getLowest() {
+            return Collections.min(grades);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Student> students = new ArrayList<>();
+
+        System.out.print("Enter number of students: ");
+        int numStudents = sc.nextInt();
+        sc.nextLine(); // consume newline
+
+        for (int i = 0; i < numStudents; i++) {
+            System.out.print("\nEnter name of student " + (i + 1) + ": ");
+            String name = sc.nextLine();
+            Student student = new Student(name);
+
+            System.out.print("Enter number of subjects for " + name + ": ");
+            int numSubjects = sc.nextInt();
+
+            System.out.println("Enter grades:");
+            for (int j = 0; j < numSubjects; j++) {
+                System.out.print("  Subject " + (j + 1) + ": ");
+                double grade = sc.nextDouble();
+                student.grades.add(grade);
+            }
+            sc.nextLine(); // consume newline
+            students.add(student);
+        }
+
+        // Summary Report
+        System.out.println("\n========= Student Summary Report =========");
+        for (Student s : students) {
+            System.out.printf("\nStudent: %s\n", s.name);
+            System.out.printf("Grades: %s\n", s.grades.toString());
+            System.out.printf("Average: %.2f\n", s.getAverage());
+            System.out.printf("Highest: %.2f\n", s.getHighest());
+            System.out.printf("Lowest: %.2f\n", s.getLowest());
+        }
+
+        sc.close();
+    }
+}
